@@ -1,0 +1,569 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DC.Common2</name>
+    </assembly>
+    <members>
+        <member name="T:DC.Common2.CircularBuffer`1">
+            <summary>
+            非线程安全的循环缓冲
+            </summary>
+        </member>
+        <member name="F:DC.Common2.CircularBuffer`1._start">
+            <summary>
+            The _start. Index of the first element in buffer.
+            </summary>
+        </member>
+        <member name="F:DC.Common2.CircularBuffer`1._end">
+            <summary>
+            The _end. Index after the last element in the buffer.
+            </summary>
+        </member>
+        <member name="F:DC.Common2.CircularBuffer`1._size">
+            <summary>
+            The _size. Buffer size.
+            </summary>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DC.Common2.CircularBuffer`1"/> class.
+            
+            </summary>
+            <param name='capacity'>
+            Buffer capacity. Must be positive.
+            </param>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.#ctor(System.Int32,`0[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:DC.Common2.CircularBuffer`1"/> class.
+            
+            </summary>
+            <param name='capacity'>
+            Buffer capacity. Must be positive.
+            </param>
+            <param name='items'>
+            Items to fill buffer with. Items length must be less than capacity.
+            Suggestion: use Skip(x).Take(y).ToArray() to build this argument from
+            any enumerable.
+            </param>
+        </member>
+        <member name="P:DC.Common2.CircularBuffer`1.Capacity">
+            <summary>
+            Maximum capacity of the buffer. Elements pushed into the buffer after
+            maximum capacity is reached (IsFull = true), will remove an element.
+            </summary>
+        </member>
+        <member name="P:DC.Common2.CircularBuffer`1.IsFull">
+            <summary>
+            Boolean indicating if Circular is at full capacity.
+            Adding more elements when the buffer is full will
+            cause elements to be removed from the other end
+            of the buffer.
+            </summary>
+        </member>
+        <member name="P:DC.Common2.CircularBuffer`1.IsEmpty">
+            <summary>
+            True if has no elements.
+            </summary>
+        </member>
+        <member name="P:DC.Common2.CircularBuffer`1.Size">
+            <summary>
+            Current buffer size (the number of elements that the buffer has).
+            </summary>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.Front">
+            <summary>
+            Element at the front of the buffer - this[0].
+            </summary>
+            <returns>The value of the element of type T at the front of the buffer.</returns>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.Back">
+            <summary>
+            Element at the back of the buffer - this[Size - 1].
+            </summary>
+            <returns>The value of the element of type T at the back of the buffer.</returns>
+        </member>
+        <member name="P:DC.Common2.CircularBuffer`1.Item(System.Int32)">
+            <summary>
+            Index access to elements in buffer.
+            Index does not loop around like when adding elements,
+            valid interval is [0;Size[
+            </summary>
+            <param name="index">Index of element to access.</param>
+            <exception cref="T:System.IndexOutOfRangeException">Thrown when index is outside of [; Size[ interval.</exception>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.PushBack(`0)">
+            <summary>
+            Pushes a new element to the back of the buffer. Back()/this[Size-1]
+            will now return this element.
+            
+            When the buffer is full, the element at Front()/this[0] will be 
+            popped to allow for this new element to fit.
+            </summary>
+            <param name="item">Item to push to the back of the buffer</param>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.PushFront(`0)">
+            <summary>
+            Pushes a new element to the front of the buffer. Front()/this[0]
+            will now return this element.
+            
+            When the buffer is full, the element at Back()/this[Size-1] will be 
+            popped to allow for this new element to fit.
+            </summary>
+            <param name="item">Item to push to the front of the buffer</param>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.PopBack">
+            <summary>
+            Removes the element at the back of the buffer. Decreasing the 
+            Buffer size by 1.
+            </summary>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.PopFront">
+            <summary>
+            Removes the element at the front of the buffer. Decreasing the 
+            Buffer size by 1.
+            </summary>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.Clear">
+            <summary>
+            Clears the contents of the array. Size = 0, Capacity is unchanged.
+            </summary>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.ToArray">
+            <summary>
+            Copies the buffer contents to an array, according to the logical
+            contents of the buffer (i.e. independent of the internal 
+            order/contents)
+            </summary>
+            <returns>A new array with a copy of the buffer contents.</returns>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.ToArraySegments">
+             <summary>
+             Get the contents of the buffer as 2 ArraySegments.
+             Respects the logical contents of the buffer, where
+             each segment and items in each segment are ordered
+             according to insertion.
+            
+             Fast: does not copy the array elements.
+             Useful for methods like <c>Send(IList&lt;ArraySegment&lt;Byte&gt;&gt;)</c>.
+             
+             <remarks>Segments may be empty.</remarks>
+             </summary>
+             <returns>An IList with 2 segments corresponding to the buffer content.</returns>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through this buffer.
+            </summary>
+            <returns>An enumerator that can be used to iterate this collection.</returns>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.Increment(System.Int32@)">
+            <summary>
+            Increments the provided index variable by one, wrapping
+            around if necessary.
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.Decrement(System.Int32@)">
+            <summary>
+            Decrements the provided index variable by one, wrapping
+            around if necessary.
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:DC.Common2.CircularBuffer`1.InternalIndex(System.Int32)">
+            <summary>
+            Converts the index in the argument to an index in <code>_buffer</code>
+            </summary>
+            <returns>
+            The transformed index.
+            </returns>
+            <param name='index'>
+            External index.
+            </param>
+        </member>
+        <member name="T:DC.Common2.DC_Math">
+            <summary>
+            DC统计量计算
+            </summary>
+        </member>
+        <member name="M:DC.Common2.DC_Math.StatOverall(System.Collections.Generic.IList{System.Double},System.Boolean,System.Collections.Generic.IList{System.Double},System.Boolean)">
+            <summary>
+            计算综合统计函数
+            </summary>
+            <param name="data">原数据</param>
+            <param name="calcQuantile">是否计算分位数</param>
+            <param name="quantilePoints">分位数点数组</param>
+            <param name="includeNegative">是否包含数组所有元素，默认值为false只包含正数, true时不过滤负数</param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalculateQuantiles(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double},System.Boolean)">
+            <summary>
+            计算给定数据数组的分位数。
+            </summary>
+            <param name="sortedData">已排序的数据数组</param>
+            <param name="quantilePoints">分位数点数组</param>
+            <returns>计算得到的分位数数组</returns>
+            <param name="includeNegative">默认值为false只包含正数, true时不过滤负数</param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalculateQuantileFilteredAverage(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double})">
+            <summary>
+            计算分位数过滤后的平均值。
+            </summary>
+            <param name="sortedData">已排序的数据数组</param>
+            <param name="quantiles">分位数数组</param>
+            <returns>分位数过滤后的平均值</returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalcCPK(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            计算CPK
+            </summary>
+            <param name="meanData">过程平均值</param>
+            <param name="sigmaData">过程标准差，若输入为0，则返回结果为0；输入小于0，则抛出异常</param>
+            <param name="USL">工艺上限</param>
+            <param name="LSL">工艺下限</param>
+            <returns>CPK</returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalcCPK(System.Double[],System.Double,System.Double,System.Boolean)">
+            <summary>
+            计算CPK
+            </summary>
+            <param name="data">传入数组</param>
+            <param name="USL">工艺上限</param>
+            <param name="LSL">工艺下限</param>
+            <param name="includeNegative">是否包含负数，如果为重量和厚度则默认为false不包含</param>
+            <returns>CPK</returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalculateStandardDeviation(System.Double[],System.Boolean)">
+            <summary>
+            计算样本标准差
+            </summary>
+            <param name="data">输入数据数组</param>
+            <param name="includeNegative">是否包含负数</param>
+            <returns>返回样本标准差，如果输入数据不符合要求则抛出异常</returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.CalculateMean(System.Double[],System.Boolean)">
+            <summary>
+            计算平均值
+            </summary>
+            <param name="data">原数据</param>
+            <param name="includeNegative">计算时是否包含负数（厚度和重量无负数需要去除）,默认值为false不包含负数，值为true时包含负数</param>
+            <returns>返回平均值</returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.ValidateDataArray(System.Collections.Generic.IList{System.Double})">
+            <summary>
+            数据长度验证
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:DC.Common2.DC_Math.ValidatePositiveDataArray(System.Double[])">
+            <summary>
+            数据正数验证
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:DC.Common2.DC_Math.StatBasic(System.Collections.Generic.IList{System.Double},System.Boolean)">
+            <summary>
+            计算基本统计量
+            </summary>
+            <param name="data">原数据</param>
+            <param name="includeNegative">是否处理负值，在处理厚度或重量等数据值不该有负值，默认值为false过滤掉负值</param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Common2.DC_Math.RSQ(System.Double[],System.Double[],System.Int32)">
+            <summary>
+            计算线性回归的决定系数 R²。
+            决定系数反映了因变量的变异中可由自变量解释部分的比例。
+            R² 值介于0到1之间，值越接近1表示回归模型拟合效果越好。
+            </summary>
+            <param name="xarr">自变量数组，即独立变量 X 的观察值集合。</param>
+            <param name="yarr">因变量数组，即依赖变量 Y 的观察值集合。</param>
+            <param name="count">数据点数量，应该小于或等于 xarr 和 yarr 的长度。</param>
+            <returns>返回 R² 的值。</returns>
+        </member>
+        <member name="T:DC.Common2.Filter">
+            <summary>
+            实现常见的数据滤波算法，包括中值滤波、均值滤波
+            </summary>
+            <remarks>设计原则：不要改变原先数组的内容，输入使用ReadOnlySpan
+            对于非法输入，应该抛出异常</remarks>
+        </member>
+        <member name="M:DC.Common2.Filter.MedianFilter(System.ReadOnlySpan{System.Double},System.Int32)">
+            <summary>
+            中值滤波（无相位移动）,保留首位
+            </summary>
+            <param name="input">原始数组</param>
+            <param name="filterWidth">滤波宽度，必须为奇数，输入偶数将强制加1</param>
+            <returns>中值滤波后的结果数组</returns>
+        </member>
+        <member name="M:DC.Common2.Filter.MedianFilter(System.ReadOnlySpan{System.Double},System.Span{System.Double},System.Int32)">
+            <summary>
+            中值滤波（无相位移动）,保留首位
+            </summary>
+            <param name="input">原始数组</param>
+            <param name="output">中值滤波后的结果数组</param>
+            <param name="filterWidth">滤波宽度，必须为奇数，输入偶数将强制加1</param>
+        </member>
+        <member name="M:DC.Common2.Filter.MovingAverage(System.ReadOnlySpan{System.Double},System.Int32,System.Double)">
+            <summary>
+            移动平均（无相位移动），首尾会被纳入计算
+            </summary>
+            <param name="input">原始数组</param>
+            <param name="filterWidth">滤波宽度，必须为奇数，输入偶数将强制加1</param>
+            <param name="thresh">小于等于此域值的数据将会被过滤</param>
+            <returns>移动平均的结果数组</returns>
+        </member>
+        <member name="M:DC.Common2.Filter.MovingAverage(System.ReadOnlySpan{System.Double},System.Span{System.Double},System.Int32,System.Double)">
+            <summary>
+            移动平均（无相位移动），首尾会被纳入计算
+            </summary>
+            <param name="input">输入数组</param>
+            <param name="output">均值滤波的结果数组</param>
+            <param name="filterWidth">滤波宽度，必须为奇数，输入偶数将强制加1</param>
+            <param name="thresh">小于等于此域值的数据将会被过滤</param>
+            <returns>移动平均的结果数组</returns>
+        </member>
+        <member name="M:DC.Common2.FiveBlock.CheckResult(DC.Common2.BlockSplitResult,System.Double)">
+            <summary>
+            五角度结果判定
+            </summary>
+            <param name="fiveBlockInfo"></param>
+        </member>
+        <member name="M:DC.Common2.FiveBlock.CalcFiveBlocks(System.Double[]@,System.Double,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            五角度/标定块算法，内部进行了均值滤波和中值滤波。五角度均值滤波宽度5，标定块宽度11。中值滤波宽度是有效数据的1/10
+            </summary>
+            <param name="mergedOrgData">归并成0.1mm的原始数据</param>
+            <param name="rangeValue">五角度左右/前后报警阈值</param>
+            <param name="leftcutCount">左边砍掉的数据，五角度一般是10，简化标定可以情况设置，因为简化标定距离长一些</param>
+            <param name="rightCutCount">右边砍掉的数据，五角度一般是10，简化标定可以情况设置，因为简化标定距离长一些</param>
+            <param name="calibrationBlock">是否用于标定快的计算，这决定了均值滤波宽度，简化标定是11，五角度是5</param>
+        </member>
+        <member name="M:DC.Common2.MarshalExtensions.StructToBytes``1(``0,System.Int32@)">
+            <summary>
+            将Struct转成字节数组
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="structObj"></param>
+            <param name="size">Struct的大小</param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Common2.MarshalExtensions.BytesToStuct``1(System.Byte[])">
+            <summary>
+            将缓冲区转换成Struct
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="bytes"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:DC.Common2.BufferManagerError">
+            <summary>
+            缓冲区出错信息
+            </summary>
+            <param name="error"></param>
+        </member>
+        <member name="P:DC.Common2.NetClient.WaitSendCount">
+            <summary>
+            等待发送队列的数据包数量
+            </summary>
+        </member>
+        <member name="P:DC.Common2.NetClient.LastActiveTime">
+            <summary>
+            最后收包时间
+            </summary>
+        </member>
+        <member name="F:DC.Common2.BufferManager.OnError">
+            <summary>
+            buffer错误管理
+            </summary>
+        </member>
+        <member name="F:DC.Common2.BufferManager.m_Buffer">
+            <summary>
+            缓存区
+            </summary>
+        </member>
+        <member name="F:DC.Common2.BufferManager.m_Index">
+            <summary>
+            包编号
+            </summary>
+        </member>
+        <member name="F:DC.Common2.BufferManager.m_InitLength">
+            <summary>
+            路径长度
+            </summary>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Clear(System.Int32)">
+            <summary>
+            清除缓存区
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Init">
+            <summary>
+            初始化缓存区
+            </summary>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="buffer">数据</param>
+            <param name="offset">偏移量</param>
+            <param name="count">数据大小</param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.Byte[])">
+            <summary>
+            缓存去区添加数据
+            </summary>
+            <param name="buffer"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.Int16,System.Boolean)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="value"></param>
+            <param name="convert"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.Int32,System.Boolean)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="value"></param>
+            <param name="convert"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.Int64,System.Boolean)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="value"></param>
+            <param name="convert"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.String,System.Text.Encoding)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="value"></param>
+            <param name="convert"></param>
+        </member>
+        <member name="M:DC.Common2.BufferManager.Add(System.String)">
+            <summary>
+            缓存区添加数据
+            </summary>
+            <param name="value"></param>
+            <param name="convert"></param>
+        </member>
+        <member name="T:DC.Common2.Migrate">
+                 * 这是数据库迁移类，使用system.Data.Sqlite这个类库，使用Serilog记录日志
+                 * 使用时，创建一个类继承 SqliteDBMigrateBase这个类，在程序初始化的时候调用“Migrate()”方法，进行数据库迁移 如:
+                 *  
+                    public class SqliteDbMigrateControl : SqliteDBMigrateBase
+                    {
+                        public override int VersionNow { get => 5;}//最新数据库的版本号，数据要修改就要改这个版本号
+                        internal SqliteDbMigrateControl(ILogger logger, string dbConnectString) : base(logger, dbConnectString)
+                        {
+                            AddMigration(new Migrate(1, $"INSERT INTO Tube ( Hv, Tc, Fc, GaugeNo) VALUES(1, 0, 0, '');", "1"));
+                            AddMigration(new Migrate(2, "INSERT INTO Tube ( Hv, Tc, Fc, GaugeNo) VALUES(2, 0, 0, '');", "2"));
+                            AddMigration(new Migrate(3, "INSERT INTO Tube ( Hv, Tc, Fc, GaugeNo) VALUES(3, 0, 0, '');", "3"));
+                            AddMigration(new Migrate(4, "ALTER TABLE PathDetail RENAME TO _PathDetail_old_20240514;" +
+                                "CREATE TABLE PathDetail (Id TEXT,SopPath TEXT, ImagePath TEXT,CONSTRAINT PATHDETAIL_PK PRIMARY KEY (Id));" +
+                                "INSERT INTO PathDetail (Id, SopPath, ImagePath) SELECT Id, SopPath,ImagePath FROM _PathDetail_old_20240514;", "改变PathDetail表结构"));
+                            AddMigration(new Migrate(5, "INSERT INTO Tube ( Hv, Tc, Fc, GaugeNo) VALUES(5, 0, 0, '');", "5"));
+                        }
+                    }
+                 * 在适当的位置调用，如：
+                   SqliteDbMigrateControl versionControl = new SqliteDbMigrateControl(Log.Logger, HealthManagerGlobalParam.SqliteDbConnectionString);
+                   versionControl.Migrate();
+            <summary>
+            迁移脚本信息
+            </summary>
+        </member>
+        <member name="T:DC.Common2.SqliteDBMigrateBase">
+            <summary>
+            数据版本管理
+            </summary>
+        </member>
+        <member name="P:DC.Common2.SqliteDBMigrateBase.VersionNow">
+            <summary>
+            只能增加版本号，不能减少版本号
+            </summary>
+        </member>
+        <member name="M:DC.Common2.SqliteDBMigrateBase.#ctor(Serilog.ILogger,System.String)">
+            <summary>
+            sqlite数据版本控制管理
+            </summary>
+            <param name="logger">Serlog日志类库的Log.Logger</param>
+            <param name="dbConnectString">数据库连接字符串</param>
+        </member>
+        <member name="M:DC.Common2.SqliteDBMigrateBase.#ctor(System.String)">
+            <summary>
+            sqlite数据版本控制管理
+            </summary>
+            <param name="dbConnectString"></param>
+        </member>
+        <member name="M:DC.Common2.SqliteDBMigrateBase.Migrate">
+            <summary>
+            版本控制
+            </summary>
+            <param name="scripts"></param>
+            <exception cref="T:System.ArgumentException">传入的scripts为空</exception>
+        </member>
+        <member name="M:DC.Common2.SqliteDBMigrateBase.WriteDbVersion(System.Data.SQLite.SQLiteConnection,System.Int32)">
+            <summary>
+            给db写上版本号
+            </summary>
+        </member>
+        <member name="T:DC.Common2.StatisticalResult">
+            <summary>
+            统计结果类
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.Average">
+            <summary>
+            平均数
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.Max">
+            <summary>
+            最大值
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.Min">
+            <summary>
+            最小值
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.StandardDeviation">
+            <summary>
+            标准差
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.ThreeSigmaPermillage">
+            <summary>
+            3σ
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.Sum">
+            <summary>
+            和
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.Quantiles">
+            <summary>
+            分位数
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.QuantileFilterAverage">
+            <summary>
+            过滤后的平均值
+            </summary>
+        </member>
+        <member name="P:DC.Common2.StatisticalResult.SortedData">
+            <summary>
+            排序后的数据
+            </summary>
+        </member>
+    </members>
+</doc>

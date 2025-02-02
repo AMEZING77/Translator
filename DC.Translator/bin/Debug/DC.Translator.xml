@@ -1,0 +1,360 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DC.Translator</name>
+    </assembly>
+    <members>
+        <member name="M:DC.Translator.Program.Main">
+            <summary>
+            应用程序的主入口点。
+            </summary>
+        </member>
+        <member name="T:DC.Translator.IntervalMode">
+            <summary>
+            非动态内插字符串的翻译文件，支持间隔符的方式
+            </summary>
+        </member>
+        <member name="F:DC.Translator.IntervalMode.Comma">
+            <summary>
+            普通的英文逗号，如果你的翻译文件的间隔符是','，请选择此枚举。
+             注意：如果词条中存在额外的',',将可能会引发翻译不准确的问题
+            </summary>
+        </member>
+        <member name="F:DC.Translator.IntervalMode.EscapeCharacter">
+            <summary>
+            特定的转义符，如果你的翻译文件的间隔符是#swsp，请选择此枚举。
+            旨在用于消除掉 Comma 枚举下的翻译不准确的问题
+            </summary>
+        </member>
+        <member name="T:DC.Translator.TextShape">
+            <summary>
+            文本的形式
+            </summary>
+        </member>
+        <member name="F:DC.Translator.TextShape.NormalShape">
+            <summary>
+            普通文本
+            </summary>
+        </member>
+        <member name="F:DC.Translator.TextShape.SunWeShape">
+            <summary>
+            动态文本
+            </summary>
+        </member>
+        <member name="T:DC.Translator.EntryEntity">
+            <summary>
+            表示翻译文件的一些关键信息
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryEntity.lastWriteTime">
+            <summary>
+            上一次文件最后写入的时间
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryEntity.intervalMode">
+            <summary>
+            当前文件的间隔符方式
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryEntity.languageHeads">
+            <summary>
+            语言类型表头
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryEntity.contextList">
+            <summary>
+            每一行的翻译内容
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryEntity.entryToAdressDic">
+            <summary>
+            (源词条, 源词条坐标) / (ID, ID坐标)
+            </summary>
+        </member>
+        <member name="T:DC.Translator.EntryAdress">
+            <summary>
+            每个词条的对应坐标
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryAdress.column">
+            <summary>
+            第几列
+            </summary>
+        </member>
+        <member name="F:DC.Translator.EntryAdress.row">
+            <summary>
+            第几行
+            </summary>
+        </member>
+        <member name="T:DC.Translator.TranslatorExcuter">
+            <summary>
+            对于MultiLangTranslator的扩展方法
+            </summary>
+        </member>
+        <member name="M:DC.Translator.TranslatorExcuter.TranslateRegion(System.Action,DC.Translator.LanguageType,DC.Translator.LanguageType)">
+            <summary>
+            所有的多语言翻译通过这个方法关联，方便统一管理
+            </summary>
+            <remarks>由于子界面初始化时都默认是中文，所以封装此方法</remarks>
+            <param name="action"></param>
+            <param name="source"></param>
+            <param name="dst"></param>
+        </member>
+        <member name="M:DC.Translator.TranslatorExcuter.TranslateText(System.String)">
+            <summary>
+            拓展翻译文本
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Translator.TranslatorExcuter.TranslateControl(System.Windows.Forms.Control)">
+            <summary>
+            拓展翻译winform控件
+            </summary>
+            <param name="control"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DC.Translator.MultiLangTranslator">
+            <summary>
+            翻译器的扩展方法
+            </summary>
+            <summary>
+            三维语言翻译器
+            </summary>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.TranslateControlDescedants(System.Windows.Forms.Control,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            翻译一个控件的范围内的所有控件的Text属性(您务必指定源语种，否则默认为汉语)
+            </summary>
+            <param name="control">指定的控件</param>
+            <param name="dict">源语种</param>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.TranslateMenuItem(System.Windows.Forms.MenuStrip,System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+            <summary>
+            翻译一个菜单控件的范围内的所有菜单控件的Text属性
+            </summary>
+            <param name="menuStrip">指定的菜单控件</param>
+            <param name="dict">翻译字典</param>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.TranslateControl(System.Windows.Forms.Control)">
+            <summary>
+            翻译一个控件极其所有子控件
+            </summary>
+            <param name="control">控件</param>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.TransText(System.String,DC.Translator.LanguageType,DC.Translator.LanguageType)">
+            <summary>
+            翻译一个文本
+            </summary>
+            <param name="text">指定的源文本</param>
+            <param name="src">源语种</param>
+            <param name="target">目标语种</param>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.TransText(System.String)">
+            <summary>
+            快速翻译目标文本到指定的语言，如果翻译失败则返回原文
+            </summary>
+            <param name="text">目标文本</param>
+            <returns></returns>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.InterpolateTran(System.String,System.Object[])">
+            <summary>
+            翻译内插字符串
+            </summary>
+            <param name="key">变量名</param>
+            <param name="args">动态对象集合</param>
+            <returns></returns>
+        </member>
+        <member name="F:DC.Translator.MultiLangTranslator.fontSizeAutoFormate">
+            <summary>
+            字体大小自动转换比例
+            </summary>
+        </member>
+        <member name="P:DC.Translator.MultiLangTranslator.Instance">
+            <summary>
+            本地实例
+            </summary>
+        </member>
+        <member name="T:DC.Translator.MultiLangTranslator.InternalTranslator">
+            <summary>
+            静态内部类实现单例模式
+            </summary>
+        </member>
+        <member name="P:DC.Translator.MultiLangTranslator.SourceLang">
+            <summary>
+            获取或设置内置的源语种,翻译前文本的源语种
+            </summary>
+        </member>
+        <member name="P:DC.Translator.MultiLangTranslator.TargetLang">
+            <summary>
+            获取或设置内置的源语种,目标翻译语种
+            </summary>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.AutoChangeLableSize(System.Windows.Forms.Control,DC.Translator.LanguageType,DC.Translator.LanguageType)">
+            <summary>
+            自动改变控件字体的大小
+            </summary>
+            <param name="control">控件</param>
+            <param name="src">源语言</param>
+            <param name="tar">目标语言</param>
+        </member>
+        <member name="M:DC.Translator.MultiLangTranslator.ReturnKingEnum(System.String)">
+            <summary>
+            根据中文形式的语言类型名返回对应的语言类型枚举
+            </summary>
+            <param name="languageName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DC.Translator.LanguageType">
+            <summary>
+            当前模块支持语种系列
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.None">
+            <summary>
+            中间值
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Chinese">
+            <summary>
+            简体中文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.English">
+            <summary>
+            英文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.German">
+            <summary>
+            德文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Rassian">
+            <summary>
+            俄文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Korean">
+            <summary>
+            韩文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Japanese">
+            <summary>
+            日本文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.French">
+            <summary>
+            法文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Italian">
+            <summary>
+            意大利文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Vietnam">
+            <summary>
+            越南文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Portugal">
+            <summary>
+            葡萄牙文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.Spain">
+            <summary>
+            西班牙文
+            </summary>
+        </member>
+        <member name="F:DC.Translator.LanguageType.TraditionalChinese">
+            <summary>
+            繁体中文
+            </summary>
+        </member>
+        <member name="T:DC.Translator.AutoSizeFont">
+            <summary>
+            字体自动变换比例
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.ChineseFont">
+            <summary>
+            翻译后中文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.EnglishFont">
+            <summary>
+            翻译后英文 字体自动变化为初始字体的比例,默认值0.8
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.GermanFont">
+            <summary>
+            翻译后德文 字体自动变化为初始字体的比例,默认值0.75
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.RassianFont">
+            <summary>
+            翻译后俄文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.KoreanFont">
+            <summary>
+            翻译后韩文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.JapaneseFont">
+            <summary>
+            翻译后日文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.FrenchFont">
+            <summary>
+            翻译后法文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.ItalianFont">
+            <summary>
+            翻译后意大利文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.VietnamFont">
+            <summary>
+            翻译后越南文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.PortugalFont">
+            <summary>
+            翻译后葡萄牙文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.SpainFont">
+            <summary>
+            翻译后西班牙文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="P:DC.Translator.AutoSizeFont.TraditionalChineseFont">
+            <summary>
+            翻译后繁体中文 字体自动变化为初始字体的比例,默认值1
+            </summary>
+        </member>
+        <member name="T:DC.Translator.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:DC.Translator.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:DC.Translator.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

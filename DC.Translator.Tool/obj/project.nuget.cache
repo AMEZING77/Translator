@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "dgSpecHash": "ljJ4gXpVHGk=",
+  "success": true,
+  "projectFilePath": "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator.Tool\\DC.Translator.Tool.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.1\\microsoft.extensions.dependencyinjection.abstractions.8.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.122\\microsoft.xaml.behaviors.wpf.1.1.122.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.container.abstractions\\9.0.106\\prism.container.abstractions.9.0.106.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.container.unity\\9.0.106\\prism.container.unity.9.0.106.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.core\\9.0.537\\prism.core.9.0.537.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.events\\9.0.537\\prism.events.9.0.537.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.unity\\9.0.537\\prism.unity.9.0.537.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\prism.wpf\\9.0.537\\prism.wpf.9.0.537.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\serilog\\4.1.0\\serilog.4.1.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\serilog.sinks.debug\\3.0.0\\serilog.sinks.debug.3.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\serilog.sinks.file\\6.0.0\\serilog.sinks.file.6.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\stub.system.data.sqlite.core.netstandard\\1.0.119\\stub.system.data.sqlite.core.netstandard.1.0.119.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.data.sqlite.core\\1.0.119\\system.data.sqlite.core.1.0.119.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\unity.abstractions\\5.11.7\\unity.abstractions.5.11.7.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\unity.container\\5.11.11\\unity.container.5.11.11.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "获取包漏洞数据时出错: 无法加载源 http://192.168.4.109/api/v4/projects/112/packages/nuget/index.json 的服务索引。"
+    },
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "获取包漏洞数据时出错: 无法加载源 http://192.168.4.109/api/v4/groups/49/-/packages/nuget/index.json 的服务索引。"
+    }
+  ]
+}
