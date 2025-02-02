@@ -1,0 +1,13 @@
+nuget-pack:
+  stage: deploy
+  script:
+    - nuget restore
+    #- code.exe /updateassemblyinfo
+    - nuget pack DC.Translator\DC.Translator.csproj -Build -Symbols -Properties Configuration=Debug -Version $CI_COMMIT_TAG 
+    - echo "nuget packed successfully"
+    - nuget push DC.Translator.$CI_COMMIT_TAG.nupkg  -Source  gitlabProject
+    - echo "nuget package pushed"
+  tags:
+    - shared
+  only:
+    - tags

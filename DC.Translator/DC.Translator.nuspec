@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+	<metadata>	
+		<id>DC.Translator</id><!--包名-->
+		<version>$Version$</version><!--版本号，采用$符号，可以自动识别AssemblyInfo.cs里面的版本号，使用$具体参见官网-->
+		<authors>sunwei</authors>
+		<owners>DC Precision</owners>
+		<projectUrl>http://192.168.4.109/common/DC.Chart3D</projectUrl><!--项目仓库地址-->
+		<license type="expression">private</license>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>
+			大成翻译模块
+		</description>
+		<copyright>copyright by DC Precision</copyright>
+		<tags>翻译模块</tags>
+	</metadata>
+</package>
+
+
+
