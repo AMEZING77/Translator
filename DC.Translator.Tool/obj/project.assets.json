@@ -751,27 +751,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
-    "D:\\DEV21.7\\Components\\Offline Packages": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\AMEZI\\.nuget\\packages\\": {},
+    "C:\\500-App\\511-VisualStudio\\ToolShared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator.Tool\\DC.Translator.Tool.csproj",
+      "projectUniqueName": "C:\\300-Study\\301-Work\\Translator\\DC.Translator.Tool\\DC.Translator.Tool.csproj",
       "projectName": "DC.Translator.Tool",
-      "projectPath": "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator.Tool\\DC.Translator.Tool.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator.Tool\\obj\\",
+      "projectPath": "C:\\300-Study\\301-Work\\Translator\\DC.Translator.Tool\\DC.Translator.Tool.csproj",
+      "packagesPath": "C:\\Users\\AMEZI\\.nuget\\packages\\",
+      "outputPath": "C:\\300-Study\\301-Work\\Translator\\DC.Translator.Tool\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\DEV21.7\\Components\\Offline Packages",
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\500-App\\511-VisualStudio\\ToolShared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "D:\\Git相关\\GIT仓库\\Translator\\NuGet.Config",
-        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.2.config",
+        "C:\\300-Study\\301-Work\\Translator\\NuGet.Config",
+        "C:\\Users\\AMEZI\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -779,16 +776,14 @@
         "net8.0-windows"
       ],
       "sources": {
-        "http://192.168.4.109/api/v4/groups/49/-/packages/nuget/index.json": {},
-        "http://192.168.4.109/api/v4/projects/112/packages/nuget/index.json": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator\\DC.Translator.csproj": {
-              "projectPath": "D:\\Git相关\\GIT仓库\\Translator\\DC.Translator\\DC.Translator.csproj"
+            "C:\\300-Study\\301-Work\\Translator\\DC.Translator\\DC.Translator.csproj": {
+              "projectPath": "C:\\300-Study\\301-Work\\Translator\\DC.Translator\\DC.Translator.csproj"
             }
           }
         }
@@ -803,7 +798,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -853,22 +848,8 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "获取包漏洞数据时出错: 无法加载源 http://192.168.4.109/api/v4/projects/112/packages/nuget/index.json 的服务索引。"
-    },
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "获取包漏洞数据时出错: 无法加载源 http://192.168.4.109/api/v4/groups/49/-/packages/nuget/index.json 的服务索引。"
-    }
-  ]
+  }
 }
